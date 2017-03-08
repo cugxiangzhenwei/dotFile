@@ -1,0 +1,79 @@
+execute pathogen#infect()
+syntax on
+filetype plugin indent on
+" Configuration file for vim
+set modelines=0		" CVE-2007-2438
+set fileencodings=utf-8,gbk,gb2312,gb18030,ucs-bom,cp936,latin1
+" Normally we use vim-extensions. If you want true vi-compatibility
+" remove change the following statements
+set nocompatible	" Use Vim defaults instead of 100% vi compatibility
+set backspace=2		" more powerful backspacing
+
+" Don't write backup file if vim is being called by "crontab -e"
+au BufWrite /private/tmp/crontab.* set nowritebackup nobackup
+" Don't write backup file if vim is being called by "chpass"
+au BufWrite /private/etc/pw.* set nowritebackup nobackup
+syntax on
+set autochdir
+set ai "自动缩进
+set si "智能缩进
+set autoread "当文件在外部被修改，自动更新该文件
+set cursorline "高亮显示当前行
+"hi cursorline guibg=#222222
+"hi CursorColumn guibg=#333333
+set mouse=a  " always use mouse 
+set nu!
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set autoindent
+set showmatch "显示括号匹配
+set linebreak "设置整词换行
+set showcmd "命令行显示输入的命令
+set showmode "命令行显示当前的模式
+set cindent
+set cinoptions={0,1s,t0,n-2,p2s,(03s,=.5s,>1s,=1s,:1s
+set smartindent " 设置缩进
+set smartindent shiftwidth=4 " C语言自动缩进，缩进值为4个字符宽度
+set showmatch "设置匹配模式，输入左括号会出现右括号
+set ruler "编辑时显示光标状态
+set incsearch "快速匹配
+set hlsearch "高亮显示搜索的内容
+set paste
+map <C-n> :NERDTree<CR>
+set tags+=/usr/include
+set tags+=/usr/local/include/tags
+set tags+=~/.vim/tags/cpp 
+set tags+=tags	
+map <C-F12> :!ctags -R --c++-kinds=+pl --fields=+iaS --extra=+q .<CR>
+let g:miniBufExplMaxSize = 1
+let Tlist_Use_SingleClick=1 
+let Tlist_Auto_Open=1 
+"let Tlist_GainFocus_On_ToggleOpen=1
+let Tlist_Show_One_File=1    " 只展示一个文件的taglist
+let Tlist_Exit_OnlyWindow=1  " 当taglist是最后以个窗口时自动退出
+let Tlist_Use_Right_Window=1 " 在右边显示taglist窗口
+let Tlist_Sort_Type="name"   " tag按名字排序
+filetype plugin indent on
+set completeopt=longest,menu
+let OmniCpp_NamespaceSearch = 2     " search namespaces in the current buffer   and in included files
+let OmniCpp_ShowPrototypeInAbbr = 1 " 显示函数参数列表
+let OmniCpp_MayCompleteScope = 1    " 输入 :: 后自动补全
+let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'gmarik/Vundle.vim'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'Chiel92/vim-autoformat'
+
+call vundle#end()
+"Bundle 'Valloric/YouCompleteMe'
+nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>gh :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" for ycm
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+let g:ycm_error_symbol = '>>'
+let g:ycm_warning_symbol = '>*'
+nmap <F4> :YcmDiags<CR>
